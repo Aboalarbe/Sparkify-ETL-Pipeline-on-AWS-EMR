@@ -6,8 +6,10 @@ from pyspark.sql.functions import udf, col, monotonically_increasing_id
 from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format, dayofweek
 
 
-os.environ['AWS_ACCESS_KEY_ID']= "<AWS_ACCESS_KEY_ID>" 
-os.environ['AWS_SECRET_ACCESS_KEY']= "<AWS_SECRET_KEY>"
+config = configparser.ConfigParser()
+config.read_file(open('dl.cfg'))
+os.environ['AWS_ACCESS_KEY_ID']= config.get('AWS', 'AWS_ACCESS_KEY_ID') 
+os.environ['AWS_SECRET_ACCESS_KEY']= config.get('AWS', 'AWS_SECRET_ACCESS_KEY')
 
 def create_spark_session():
     spark = SparkSession \
